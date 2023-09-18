@@ -1,0 +1,12 @@
+ctrl + D > 복사
+ctrl + y > 한줄 삭제
+ctrl + f4 > 탭닫기
+shift + F6  > 한번에 rename 가능
+ctrl + alt + s > Setting
+ctrl + alt + shift + s > project Structure
+alt + insert > getter / setter
+ctrl + alt + v > 변수 추출하기
+ctrl + alt + o > import 정리
+ctrl + shift + z > 되돌리기
+ctrl + shift + t > 테스트 파일 메소드 껍데기 자동 만들기
+ctrl + shift + alt + l > 줄 맞춤

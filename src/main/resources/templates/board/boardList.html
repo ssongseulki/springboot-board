@@ -1,0 +1,77 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="fragments/layout">
+<th:block layout:fragment="script">
+    <script>
+        $(document).ready(function () {
+            //게시글 상세 조회
+            $('.boardTitle').click(function () {
+                let boardId = $(this).siblings('#boardId').val();
+                location.href = '/boards/' + boardId;
+            });
+
+            //글쓰기
+            $('#writeBtn').click(function () {
+                location.href = '/boards/writePage';
+            });
+
+            //홈버튼
+            $('#homeBtn').click(function () {
+                location.href = '/';
+            });
+
+            $('.disabled').bind('click', false);
+        });
+
+    </script>
+</th:block>
+<th:block layout:fragment="content">
+    <div class="container">
+        <div class="boardDiv">
+            <h1 th:inline="text">Hello [[${member.memberName}]]</h1>
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="로그아웃">
+            </form>
+            <table id="table">
+                <thead>
+                <tr>
+                    <td>순번</td>
+                    <td>제목</td>
+                    <td>작성자</td>
+                    <td>조회수</td>
+                    <td>등록일</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="board,rowStatus : ${boardList}">
+                    <input type="hidden" id="boardId" th:value="${board.id}">
+                    <td th:text="${rowStatus.index + boardList.number * boardList.size + 1}"></td>
+                    <td th:text="${board.title}" class="boardTitle"></td>
+                    <td th:if="${board.member != null}" th:text="${board.member.memberName}"></td>
+                    <td th:text="${board.hitCnt}"></td>
+                    <td th:text="${#temporals.format(board.regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <div th:if="${boardList.totalPages > 1}" class="pagination">
+                <ul>
+                    <li th:class="${boardList.number == 0 ? 'disabled' : ''}">
+                        <a th:href="@{${'/boards?page=' + (boardList.number)}}">이전</a>
+                    </li>
+                    <li th:each="pageNumber : ${#numbers.sequence(1, boardList.totalPages)}"
+                        th:class="${boardList.number + 1 == pageNumber} ? 'active' : ''">
+                        <a th:href="@{${'/boards?page=' + pageNumber}}" th:text="${pageNumber}"></a>
+                    </li>
+                    <li th:class="${boardList.number + 1 == boardList.totalPages ? 'disabled' : ''}">
+                        <a th:href="@{${'/boards?page=' + (boardList.number + 2)}}">다음</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <input type="button" id="writeBtn" value="글쓰기">
+            <input type="button" id="homeBtn" value="홈으로">
+        </div>
+    </div>
+</th:block>
+</html>

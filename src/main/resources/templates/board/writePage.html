@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="fragments/layout">
+<th:block layout:fragment="script">
+    <script>
+        $(document).ready(function () {
+            $('#saveBtn').click(saveBoard);
+        });
+
+        function saveBoard() {
+            const csrfToken = $("meta[name='_csrf']").attr("content");
+            const csrfHeader = $("meta[name='_csrf_header']").attr("content");
+            let obj = {};
+            const boardId = $('#boardId').val();
+            let url = '/boards';
+            let method = 'post';
+
+            if (boardId) {
+                obj.id = boardId;
+                url = '/boards/' + boardId;
+                method = 'patch';
+            }
+            obj.memberId = $('#memberId').val();
+            obj.boardTitle = $('#inputTitle').val();
+            obj.boardContent = $('#inputContent').val();
+
+            $.ajax({
+                url: url,
+                method: method,
+                data: JSON.stringify(obj),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                beforeSend: function (xhr) {
+                    // CSRF 토큰을 요청 헤더에 추가
+                    xhr.setRequestHeader(csrfHeader, csrfToken);
+                },
+                success: function (data) {
+                    alert('저장되었습니다.');
+                    location.href = '/boards/' + data;
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    if (xhr.status === 404) {
+                        console.log(xhr.responseText);
+                    } else {
+                        console.error('오류 발생: ' + textStatus, errorThrown);
+                    }
+                }
+            });
+        }
+    </script>
+</th:block>
+<th:block layout:fragment="content">
+    <div class="container">
+        <div class="boardDiv">
+            <table id="table">
+                <tr>
+                    <td>작성자</td>
+                    <td th:text="${board != null ? board.member.memberName : member.memberName}"></td>
+                </tr>
+                <tr>
+                    <td>제목</td>
+                    <td><input type="text" id="inputTitle" name="title" th:value="${board != null ? board.title : ''}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>내용</td>
+                    <td><textarea id="inputContent" th:text="${board != null ? board.content : ''}"></textarea></td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
+            <input type="hidden" id="memberId" th:value="${board != null ? board.member.id : member.id}">
+            <input type="hidden" id="boardId" th:value="${board != null ? board.id : ''}">
+            <input type="button" id="saveBtn" th:value="${board != null ? '수정' : '등록'}">
+        </div>
+    </div>
+</th:block>
+</html>

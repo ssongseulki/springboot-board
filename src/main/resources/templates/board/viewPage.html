@@ -1,0 +1,78 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="fragments/layout">
+<th:block layout:fragment="script">
+    <script>
+        $(document).ready(function () {
+            //목록 버튼
+            $('#boardListBtn').click(function () {
+                location.href = '/boards';
+            });
+
+            //수정 버튼
+            $('#modifyBtn').click(function () {
+                const boardId = $('#boardId').val();
+                location.href = '/boards/modifyPage/' + boardId;
+            });
+
+            //삭제 버튼
+            $('#deleteBtn').click(deleteBoard);
+        });
+
+        function deleteBoard() {
+            const boardId = $('#boardId').val();
+
+            $.ajax({
+                url: '/boards/' + boardId,
+                method: 'delete',
+                data: boardId,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'text',
+                success: function (data) {
+                    console.log(data);
+                    alert(data);
+                    location.href = '/boards';
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    if (xhr.status === 404) {
+                        console.log(xhr.responseText);
+                    } else {
+                        console.error('오류 발생: ' + textStatus, errorThrown);
+                    }
+                }
+            });
+        }
+
+    </script>
+</th:block>
+<th:block layout:fragment="content">
+    <div class="container">
+        <div class="boardDiv">
+            <table id="table">
+                <tr>
+                    <td>작성자</td>
+                    <td th:text="${board.member.memberName}"></td>
+                    <td>작성일</td>
+                    <td th:text="${#temporals.format(board.regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                </tr>
+                <tr>
+                    <td>제목</td>
+                    <td colspan="3" th:text="${board.title}"></td>
+                </tr>
+                <tr>
+                    <td>내용</td>
+                    <td colspan="3" th:text="${board.content}"></td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <input type="hidden" id="boardId" th:value="${board.id}">
+            <input type="button" id="boardListBtn" value="목록">
+            <input th:if="${#httpServletRequest.remoteUser == board.member.memberEmail}" type="button" id="modifyBtn"
+                   value="수정">
+            <input th:if="${#httpServletRequest.remoteUser == board.member.memberEmail}" type="button" id="deleteBtn"
+                   value="삭제">
+        </div>
+    </div>
+</th:block>
+</html>
