@@ -28,7 +28,7 @@
 <th:block layout:fragment="content">
     <div class="container">
         <div class="boardDiv">
-            <h1 th:inline="text">Hello [[${member.memberName}]]</h1>
+            <h1>게시판</h1>
             <form th:action="@{/logout}" method="post">
                 <input type="submit" value="로그아웃">
             </form>
@@ -45,7 +45,7 @@
                 <tbody>
                 <tr th:each="board,rowStatus : ${boardList}">
                     <input type="hidden" id="boardId" th:value="${board.id}">
-                    <td th:text="${rowStatus.index + boardList.number * boardList.size + 1}"></td>
+                    <td th:text="${boardList.totalElements - (rowStatus.index + boardList.size * boardList.number)} "></td>
                     <td th:text="${board.title}" class="boardTitle"></td>
                     <td th:if="${board.member != null}" th:text="${board.member.memberName}"></td>
                     <td th:text="${board.hitCnt}"></td>

@@ -1,5 +1,7 @@
 package ssong.boardspring.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import ssong.boardspring.domain.Member;
 
 import java.util.List;
@@ -18,4 +20,5 @@ public interface MemberRepository {
     //모두 조회
     List<Member> findAll();
 
+    Page<Member> findAll(Pageable pageable);
 }

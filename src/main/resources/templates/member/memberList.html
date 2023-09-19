@@ -2,28 +2,57 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="fragments/layout">
 
+<th:block layout:fragment="script">
+    <script>
+        $(document).ready(function () {
+            $('.disabled').bind('click', false);
+
+            //홈버튼
+            $('#homeBtn').click(function () {
+                location.href = '/';
+            });
+        });
+    </script>
+</th:block>
+
 <th:block layout:fragment="content">
-  <div class="container">
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <td>#</td>
-            <td>이름</td>
-            <td>이메일</td>
-            <td>연락처</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="member : ${memberList}">
-            <td th:text="${member.id}"></td>
-            <td th:text="${member.memberName}"></td>
-            <td th:text="${member.memberEmail}"></td>
-            <td th:text="${member.memberPhone}"></td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="container">
+        <div>
+            <h1>회원 목록</h1>
+            <table>
+                <thead>
+                <tr>
+                    <td>순번</td>
+                    <td>이름</td>
+                    <td>이메일</td>
+                    <td>연락처</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="member, rowStatus : ${memberList}">
+                    <td th:text="${memberList.totalElements - (rowStatus.index + memberList.size * memberList.number)} "></td>
+                    <td th:text="${member.memberName}"></td>
+                    <td th:text="${member.memberEmail}"></td>
+                    <td th:text="${member.memberPhone}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <div th:if="${memberList.totalPages > 1}" class="pagination">
+                <ul>
+                    <li th:class="${memberList.number == 0 ? 'disabled' : ''}">
+                        <a th:href="@{${'/members/paging?page=' + (memberList.number)}}">이전</a>
+                    </li>
+                    <li th:each="pageNumber : ${#numbers.sequence(1, memberList.totalPages)}"
+                        th:class="${memberList.number + 1 == pageNumber} ? 'active' : ''">
+                        <a th:href="@{${'/members/paging?page=' + pageNumber}}" th:text="${pageNumber}"></a>
+                    </li>
+                    <li th:class="${memberList.number + 1 == memberList.totalPages ? 'disabled' : ''}">
+                        <a th:href="@{${'/members/paging?page=' + (memberList.number + 2)}}">다음</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <input type="button" id="homeBtn" value="홈으로">
     </div>
-  </div>
 </th:block>
 </html>

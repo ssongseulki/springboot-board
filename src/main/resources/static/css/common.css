@@ -1,0 +1,9 @@
+.pagination > ul {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+}
+
+.pagination > ul li {
+    margin: 0 10px;
+}

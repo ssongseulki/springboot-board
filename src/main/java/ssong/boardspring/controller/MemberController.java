@@ -1,6 +1,7 @@
 package ssong.boardspring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,13 +39,22 @@ public class MemberController {
         return "redirect:/";
     }
 
-
+    //전체 회원 조회
     @GetMapping("")
-    public String memberList(Model model){
+    public String getMembers(Model model){
         List<Member> memberList = memberService.findMembers();
         model.addAttribute("memberList", memberList);
         return "member/memberList";
     }
 
+    //전체 회원 조회 For Paging
+    @GetMapping("/paging")
+    public String membersForPaging(Model model, @RequestParam(defaultValue = "1") int page){
+        int pageSize = 5;
+
+        Page<Member> memberList = memberService.findMembersForPaging(page, pageSize);
+        model.addAttribute("memberList", memberList);
+        return "member/memberList";
+    }
 
 }

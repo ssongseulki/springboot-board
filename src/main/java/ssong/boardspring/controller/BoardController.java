@@ -39,16 +39,11 @@ public class BoardController {
 
     //게시판 목록
     @GetMapping("")
-    public ModelAndView getBoards(@RequestParam(defaultValue = "1") int page, HttpServletRequest request) {
-        int pageSize = 5;
+    public ModelAndView getBoards(@RequestParam(defaultValue = "1") int page) {
+        int pageSize = 10;
 
         Page<Board> boardList = boardService.findBoardList(page, pageSize);
         ModelAndView mv = new ModelAndView("board/boardList");
-
-        String remoteUser = request.getRemoteUser();
-        Member member = memberService.findByMemberEmail(remoteUser);
-
-        mv.addObject("member", member);
         mv.addObject("boardList", boardList);
         return mv;
     }

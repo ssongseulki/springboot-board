@@ -1,5 +1,9 @@
 package ssong.boardspring.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +45,12 @@ public class MemberService {
     //전체 회원 조회
     public List<Member> findMembers() {
         return memberRepository.findAll();
+    }
+
+    //전체 회원 조회 For Paging
+    public Page<Member> findMembersForPaging(int page, int pageSize){
+        Pageable pageable = PageRequest.of(page-1, pageSize, Sort.by("id").descending());
+        return memberRepository.findAll(pageable);
     }
 
     //ID로 단일 회원 조회
