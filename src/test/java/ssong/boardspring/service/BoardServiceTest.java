@@ -12,7 +12,7 @@ import ssong.boardspring.repository.BoardRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-//@Transactional
+@Transactional
 @SpringBootTest
 public class BoardServiceTest {
 
@@ -37,7 +37,7 @@ public class BoardServiceTest {
     @Test
     void update() {
         BoardUpdateDto boardUpdateDto = new BoardUpdateDto();
-        boardUpdateDto.setId(98);
+        boardUpdateDto.setId(33);
         boardUpdateDto.setBoardTitle("히히히");
         boardUpdateDto.setBoardContent("죠아떠");
 
