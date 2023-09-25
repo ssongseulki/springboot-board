@@ -27,7 +27,7 @@ public class BoardServiceTest {
         BoardCreateDto boardDto = new BoardCreateDto();
         boardDto.setBoardTitle("제목???");
         boardDto.setBoardContent("내용???");
-        boardDto.setMemberId(35);
+        boardDto.setMemberId(1);
 
         Long saveId = boardService.createBoard(boardDto);
         Long findBoardId = boardService.findOne(saveId).getId();
@@ -37,7 +37,7 @@ public class BoardServiceTest {
     @Test
     void update() {
         BoardUpdateDto boardUpdateDto = new BoardUpdateDto();
-        boardUpdateDto.setId(33);
+        boardUpdateDto.setId(1);
         boardUpdateDto.setBoardTitle("히히히");
         boardUpdateDto.setBoardContent("죠아떠");
 
