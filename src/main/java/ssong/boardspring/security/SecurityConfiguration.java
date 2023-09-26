@@ -37,7 +37,7 @@ public class SecurityConfiguration {
                     .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                     .and()
                 .authorizeHttpRequests()
-                    .antMatchers("/","/members/signUp").permitAll()   //접근 인증절차 없이 가능
+                    .antMatchers("/","/members/signUp", "/css/**", "/scripts/**").permitAll()   //접근 인증절차 없이 가능
                     .anyRequest().authenticated()   //그 외 모든 리소스는 인증 필요
                     .and()
                 .formLogin()
