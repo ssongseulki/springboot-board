@@ -7,6 +7,7 @@ import ssong.boardspring.domain.Board;
 
 import java.util.Optional;
 
+
 public interface BoardRepository extends PagingAndSortingRepository<Board,Long> {
 
     //게시글 작성, 수정
@@ -15,16 +16,11 @@ public interface BoardRepository extends PagingAndSortingRepository<Board,Long> 
     //게시글 삭제
     Board deleteById(long id);
 
-    //게시글 리스트
-    //List<Board> findAll();
-
     //게시글 리스트 ForPaging
     Page<Board> findAll(Pageable pageable);
 
     //단일 게시글 조회
     Optional<Board>findById(long id);
-
-    //게시글 조회수 증가
 
     //게시글 댓글 등록
 

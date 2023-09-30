@@ -1,13 +1,8 @@
 package ssong.boardspring.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,7 +17,6 @@ import ssong.boardspring.service.BoardService;
 import ssong.boardspring.service.MemberService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Controller
 @RequestMapping("/boards")
@@ -48,11 +42,16 @@ public class BoardController {
         return mv;
     }
 
-    //게시글 단일 조회
+    //게시글 조회
     @GetMapping("/{boardId}")
     public ModelAndView getBoard(@PathVariable Long boardId) {
         ModelAndView mv = new ModelAndView("board/viewPage");
-        mv.addObject("board", boardService.findOne(boardId));
+        //게시글 조회수 증가
+        boolean resultView = boardService.incrementHitCnt(boardId);
+        if (resultView == true) {
+            //게시글 정보 조회
+            mv.addObject("board", boardService.findOne(boardId));
+        }
         return mv;
     }
 
@@ -105,8 +104,8 @@ public class BoardController {
     //게시글 삭제
     @DeleteMapping("/{boardId}")
     public ResponseEntity<String> deleteBoard(@Validated @PathVariable Long boardId) {
-        int cnt = boardService.deleteBoard(boardId);
-        if (cnt > 0) {
+        boolean result = boardService.deleteBoard(boardId);
+        if (result) {
             return ResponseEntity.ok("삭제되었습니다.");
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND)

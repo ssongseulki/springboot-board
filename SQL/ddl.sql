@@ -18,7 +18,7 @@ CREATE TABLE board
     title VARCHAR(255),
     content TEXT,
     member_id BIGINT,
-    hit_cnt BIGINT,
+    view BIGINT,
     reg_date TIMESTAMP,
     mod_date TIMESTAMP
 );

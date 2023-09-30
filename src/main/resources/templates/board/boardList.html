@@ -48,7 +48,7 @@
                     <td th:text="${boardList.totalElements - (rowStatus.index + boardList.size * boardList.number)} "></td>
                     <td th:text="${board.title}" class="boardTitle"></td>
                     <td th:if="${board.member != null}" th:text="${board.member.memberName}"></td>
-                    <td th:text="${board.hitCnt}"></td>
+                    <td th:text="${board.view}"></td>
                     <td th:text="${#temporals.format(board.regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 </tr>
                 </tbody>

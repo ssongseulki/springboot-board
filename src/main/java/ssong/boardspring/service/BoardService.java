@@ -5,8 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ssong.boardspring.domain.Board;
@@ -15,7 +13,6 @@ import ssong.boardspring.dto.BoardCreateDto;
 import ssong.boardspring.dto.BoardUpdateDto;
 import ssong.boardspring.repository.BoardRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -54,35 +51,37 @@ public class BoardService {
 
     }
 
-    //게시글 리스트
-//    public List<Board> findBoardList() {
-//        List<Board> boardList = boardRepository.findAll();
-//        return boardList;
-//    }
-
     //게시글 목록 FOR PAGINATION
     public Page<Board> findBoardList(int page, int pageSize) {
-        Pageable pageable = PageRequest.of(page-1, pageSize, Sort.by("regDate").descending());
+        Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by("regDate").descending());
         return (Page<Board>) boardRepository.findAll(pageable);
     }
 
     //게시글 조회
     public Board findOne(Long boardId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
-        if (optionalBoard.isPresent()) {
-            return optionalBoard.get();
-        }
-        return null;
+        return optionalBoard.orElse(null);
     }
 
     //게시글 삭제
-    public int deleteBoard(Long boardId){
-        int cnt = 0;
-        try{
+    public boolean deleteBoard(Long boardId) {
+        try {
             boardRepository.deleteById(boardId);
-            cnt++;
-        } catch (EmptyResultDataAccessException e){
+            return true;
+        } catch (EmptyResultDataAccessException e) {
+            return false;
         }
-        return cnt;
+    }
+
+    //게시글 조회수 증가
+    public boolean incrementHitCnt(Long boardId) {
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
+        if (optionalBoard.isPresent()) {
+            Board board = optionalBoard.get();
+            board.setView(board.getView() + 1);
+            boardRepository.save(board);
+            return true;
+        }
+        return false;
     }
 }

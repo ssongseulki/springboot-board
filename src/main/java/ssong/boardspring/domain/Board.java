@@ -21,7 +21,7 @@ public class Board extends CommonEntity {
     private Member member;
     private String title;
     private String content;
-    private long hitCnt;
+    private long view;
 
     public long getId() {
         return id;
@@ -55,12 +55,11 @@ public class Board extends CommonEntity {
         this.content = content;
     }
 
-    public long getHitCnt() {
-        return hitCnt;
+    public long getView() {
+        return view;
     }
 
-    public void setHitCnt(long hitCnt) {
-        this.hitCnt = hitCnt;
+    public void setView(long view) {
+        this.view = view;
     }
-
 }
