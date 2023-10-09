@@ -1,6 +1,7 @@
 package ssong.boardspring.dto;
 
 import com.sun.istack.NotNull;
+import org.springframework.web.multipart.MultipartFile;
 
 public class BoardCreateDto {
 
@@ -10,6 +11,9 @@ public class BoardCreateDto {
     private String boardContent;
     @NotNull
     private long memberId;
+    private String fileName;
+    private String s3fileName;
+    private String filePath;
 
     public void setBoardTitle(String boardTitle) {
         this.boardTitle = boardTitle;
@@ -34,4 +38,29 @@ public class BoardCreateDto {
     public long getMemberId() {
         return memberId;
     }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getS3fileName() {
+        return s3fileName;
+    }
+
+    public void setS3fileName(String s3fileName) {
+        this.s3fileName = s3fileName;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
 }

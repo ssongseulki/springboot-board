@@ -2,17 +2,30 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="fragments/layout">
 
+<th:block layout:fragment="script">
+    <script>
+        $(document).ready(function(){
+            $('#memberListBtn').click(function(){
+               if($('#user').val() == 'ssong@naver.com'){
+                   $(this).attr('href','/members/paging');
+                   //location.href = '/members/paging';
+               }else{
+                    alert('회원 목록에 대한 권한이 없습니다.');
+               }
+            });
+        });
+    </script>
+</th:block>
 <th:block layout:fragment="content">
     <div class="container">
         <div class="memberDiv">
             <h1>Home</h1>
             <a href="/boards">게시판 바로가기</a>
-            <p>
-                <a href="/members/signUp">회원
-
-                    가입</a>
-                <a href="/members/paging">회원 목록</a>
-            </p>
+            <div>
+                <a href="/members/signUp">회원가입</a>
+                <a href="" id="memberListBtn">회원 목록</a>
+                <input type="hidden" id="user" th:value="${user}">
+            </div>
         </div>
     </div>
 </th:block>

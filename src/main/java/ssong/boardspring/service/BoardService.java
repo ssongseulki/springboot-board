@@ -31,6 +31,9 @@ public class BoardService {
         Board board = new Board();
         board.setTitle(boardCreateDto.getBoardTitle());
         board.setContent(boardCreateDto.getBoardContent());
+        board.setFileName(boardCreateDto.getFileName());
+        board.setS3fileName(boardCreateDto.getS3fileName());
+        board.setFilePath(boardCreateDto.getFilePath());
         Member member = memberService.findOne(boardCreateDto.getMemberId()).get();
         board.setMember(member);
         boardRepository.save(board);

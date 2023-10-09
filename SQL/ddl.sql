@@ -19,6 +19,9 @@ CREATE TABLE board
     content TEXT,
     member_id BIGINT,
     view BIGINT,
+    fileName VARCHAR(255),
+    s3FileName VARCHAR(255),
+    filePath VARCHAR(255),
     reg_date TIMESTAMP,
     mod_date TIMESTAMP
 );

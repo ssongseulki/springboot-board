@@ -22,6 +22,10 @@ public class Board extends CommonEntity {
     private String title;
     private String content;
     private long view;
+    private String fileName;
+    private String s3fileName;
+    private String filePath;
+
 
     public long getId() {
         return id;
@@ -61,5 +65,29 @@ public class Board extends CommonEntity {
 
     public void setView(long view) {
         this.view = view;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getS3fileName() {
+        return s3fileName;
+    }
+
+    public void setS3fileName(String s3fileName) {
+        this.s3fileName = s3fileName;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 }

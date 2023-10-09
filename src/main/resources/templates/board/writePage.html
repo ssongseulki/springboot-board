@@ -11,25 +11,31 @@
         function saveBoard() {
             const csrfToken = $("meta[name='_csrf']").attr("content");
             const csrfHeader = $("meta[name='_csrf_header']").attr("content");
-            let obj = {};
+            const formData = new FormData();
+            const fileInput = $('#attachedFile')[0].files[0];
             const boardId = $('#boardId').val();
             let url = '/boards';
             let method = 'post';
 
             if (boardId) {
-                obj.id = boardId;
+                formData.append('id', boardId);
                 url = '/boards/' + boardId;
                 method = 'patch';
             }
-            obj.memberId = $('#memberId').val();
-            obj.boardTitle = $('#inputTitle').val();
-            obj.boardContent = $('#inputContent').val();
+            if (fileInput) {
+                formData.append('attachedFile', fileInput);
+            }
+            formData.append('memberId', $('#memberId').val());
+            formData.append('boardTitle', $('#inputTitle').val());
+            formData.append('boardContent', $('#inputContent').val());
+
 
             $.ajax({
                 url: url,
                 method: method,
-                data: JSON.stringify(obj),
-                contentType: 'application/json; charset=utf-8',
+                data: formData,
+                processData: false,
+                contentType: false,
                 dataType: 'json',
                 beforeSend: function (xhr) {
                     // CSRF 토큰을 요청 헤더에 추가
@@ -66,6 +72,10 @@
                 <tr>
                     <td>내용</td>
                     <td><textarea id="inputContent" th:text="${board != null ? board.content : ''}"></textarea></td>
+                </tr>
+                <tr>
+                    <td>첨부파일</td>
+                    <td><input type="file" id="attachedFile" name="attachedFile"></td>
                 </tr>
             </table>
         </div>

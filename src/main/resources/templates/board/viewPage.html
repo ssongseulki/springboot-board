@@ -17,9 +17,12 @@
 
             //삭제 버튼
             $('#deleteBtn').click(deleteBoard);
+
         });
 
         function deleteBoard() {
+            const csrfToken = $("meta[name='_csrf']").attr("content");
+            const csrfHeader = $("meta[name='_csrf_header']").attr("content");
             const boardId = $('#boardId').val();
 
             $.ajax({
@@ -28,8 +31,11 @@
                 data: boardId,
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'text',
+                beforeSend: function (xhr) {
+                    // CSRF 토큰을 요청 헤더에 추가
+                    xhr.setRequestHeader(csrfHeader, csrfToken);
+                },
                 success: function (data) {
-                    console.log(data);
                     alert(data);
                     location.href = '/boards';
                 },
@@ -58,6 +64,11 @@
                 <tr>
                     <td>제목</td>
                     <td colspan="3" th:text="${board.title}"></td>
+                </tr>
+                <tr>
+                    <td>첨부파일</td>
+                    <td colspan="2"><a th:href="'/boards/downloadFile?fileName=' + ${board.s3fileName}" th:text="${board.fileName}"></a></td>
+                    <td><a th:if="${board.filePath != null}" th:href="${board.filePath}">보기</a></td>
                 </tr>
                 <tr>
                     <td>내용</td>
