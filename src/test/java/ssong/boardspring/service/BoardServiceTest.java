@@ -3,11 +3,9 @@ package ssong.boardspring.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import ssong.boardspring.domain.Board;
-import ssong.boardspring.dto.BoardCreateDto;
-import ssong.boardspring.dto.BoardUpdateDto;
+import ssong.boardspring.dto.BoardDto;
 import ssong.boardspring.repository.BoardRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,7 +22,7 @@ public class BoardServiceTest {
 
     @Test
     void save() {
-        BoardCreateDto boardDto = new BoardCreateDto();
+        BoardDto boardDto = new BoardDto();
         boardDto.setBoardTitle("제목???");
         boardDto.setBoardContent("내용???");
         boardDto.setMemberId(1);
@@ -36,15 +34,15 @@ public class BoardServiceTest {
 
     @Test
     void update() {
-        BoardUpdateDto boardUpdateDto = new BoardUpdateDto();
-        boardUpdateDto.setId(1);
-        boardUpdateDto.setBoardTitle("히히히");
-        boardUpdateDto.setBoardContent("죠아떠");
+        BoardDto boardDto = new BoardDto();
+        boardDto.setId(1);
+        boardDto.setBoardTitle("수정입니다.");
+        boardDto.setBoardContent("수정하는 내용");
 
-        Long saveId = boardService.updateBoard(boardUpdateDto);
+        Long saveId = boardService.updateBoard(boardDto);
         Board findBoard = boardService.findOne(saveId);
-        assertThat(boardUpdateDto.getBoardTitle()).isEqualTo(findBoard.getTitle());
-        assertThat(boardUpdateDto.getBoardContent()).isEqualTo(findBoard.getContent());
+        assertThat(boardDto.getBoardTitle()).isEqualTo(findBoard.getTitle());
+        assertThat(boardDto.getBoardContent()).isEqualTo(findBoard.getContent());
     }
 
 

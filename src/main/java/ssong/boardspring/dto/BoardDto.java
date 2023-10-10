@@ -1,10 +1,10 @@
 package ssong.boardspring.dto;
 
 import com.sun.istack.NotNull;
-import org.springframework.web.multipart.MultipartFile;
 
-public class BoardCreateDto {
-
+public class BoardDto {
+    @NotNull
+    private long id;
     @NotNull
     private String boardTitle;
     @NotNull
@@ -14,6 +14,14 @@ public class BoardCreateDto {
     private String fileName;
     private String s3fileName;
     private String filePath;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public void setBoardTitle(String boardTitle) {
         this.boardTitle = boardTitle;

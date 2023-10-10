@@ -9,8 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ssong.boardspring.domain.Board;
 import ssong.boardspring.domain.Member;
-import ssong.boardspring.dto.BoardCreateDto;
-import ssong.boardspring.dto.BoardUpdateDto;
+import ssong.boardspring.dto.BoardDto;
 import ssong.boardspring.repository.BoardRepository;
 
 import java.util.Optional;
@@ -27,25 +26,28 @@ public class BoardService {
     }
 
     //게시글 작성
-    public long createBoard(BoardCreateDto boardCreateDto) {
+    public long createBoard(BoardDto boardDto) {
         Board board = new Board();
-        board.setTitle(boardCreateDto.getBoardTitle());
-        board.setContent(boardCreateDto.getBoardContent());
-        board.setFileName(boardCreateDto.getFileName());
-        board.setS3fileName(boardCreateDto.getS3fileName());
-        board.setFilePath(boardCreateDto.getFilePath());
-        Member member = memberService.findOne(boardCreateDto.getMemberId()).get();
+        board.setTitle(boardDto.getBoardTitle());
+        board.setContent(boardDto.getBoardContent());
+        board.setFileName(boardDto.getFileName());
+        board.setS3fileName(boardDto.getS3fileName());
+        board.setFilePath(boardDto.getFilePath());
+        Member member = memberService.findOne(boardDto.getMemberId()).get();
         board.setMember(member);
         boardRepository.save(board);
         return board.getId();
     }
 
     //게시글 수정
-    public Long updateBoard(BoardUpdateDto boardUpdateDto) {
-        Board board = boardRepository.findById(boardUpdateDto.getId()).orElse(null);
+    public Long updateBoard(BoardDto boardDto) {
+        Board board = boardRepository.findById(boardDto.getId()).orElse(null);
         if (board != null) {
-            board.setContent(boardUpdateDto.getBoardContent());
-            board.setTitle(boardUpdateDto.getBoardTitle());
+            board.setContent(boardDto.getBoardContent());
+            board.setTitle(boardDto.getBoardTitle());
+            board.setFileName(boardDto.getFileName());
+            board.setS3fileName(boardDto.getS3fileName());
+            board.setFilePath(boardDto.getFilePath());
             boardRepository.save(board);
             return board.getId();
         } else {

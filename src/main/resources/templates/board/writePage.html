@@ -5,9 +5,18 @@
 <th:block layout:fragment="script">
     <script>
         $(document).ready(function () {
+            //게시글 저장 버튼
             $('#saveBtn').click(saveBoard);
+
+            //파일명 변경
+            $('#attachedFile').change(function() {
+                let fileName = $(this).val().split('\\').pop();
+                $('#fileNameDisplay').text(fileName);
+            });
+
         });
 
+        //게시글 저장
         function saveBoard() {
             const csrfToken = $("meta[name='_csrf']").attr("content");
             const csrfHeader = $("meta[name='_csrf_header']").attr("content");
@@ -25,6 +34,7 @@
             if (fileInput) {
                 formData.append('attachedFile', fileInput);
             }
+            formData.append('s3fileName', $("#s3fileName").val());
             formData.append('memberId', $('#memberId').val());
             formData.append('boardTitle', $('#inputTitle').val());
             formData.append('boardContent', $('#inputContent').val());
@@ -70,12 +80,17 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>내용</td>
-                    <td><textarea id="inputContent" th:text="${board != null ? board.content : ''}"></textarea></td>
+                    <td>첨부파일</td>
+                    <td>
+                        <label for="attachedFile" class="custom-file-input-label" style="background-color: #898989; color: #fff; font-size: 12px; padding: 5px; cursor: pointer;">파일 선택</label>
+                        <input type="file" id="attachedFile" name="attachedFile" style="display: none;">
+                        <span id="fileNameDisplay" th:text="${board != null ? board.fileName : ''}"></span>
+                        <input type="hidden" id="s3fileName" name="s3fileName" th:value="${board != null ? board.s3fileName : ''}">
+                    </td>
                 </tr>
                 <tr>
-                    <td>첨부파일</td>
-                    <td><input type="file" id="attachedFile" name="attachedFile"></td>
+                    <td>내용</td>
+                    <td><textarea id="inputContent" th:text="${board != null ? board.content : ''}"></textarea></td>
                 </tr>
             </table>
         </div>
