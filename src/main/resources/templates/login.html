@@ -1,23 +1,43 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="fragments/layout">
+<th:block layout:fragment="script">
+    <script>
+        $(document).ready(function () {
+            $("#signUpBtn").click(function () {
+                location.href = '/members/signUp';
+            });
 
+            $("#homeBtn").click(function(){
+                location.href = '/';
+            });
+        });
+    </script>
+</th:block>
 <th:block layout:fragment="content">
-    <div th:if="${param.error}">이메일과 비밀번호가 맞지 않습니다.</div>
-    <div th:if="${param.logout}">로그아웃 되었습니다.</div>
-    <form th:action="@{/login}" method="post">
-        <table>
-            <tr>
-                <td><label for="userName">email : </label></td>
-                <td><input type="text" name="username" id="userName"></td>
-            </tr>
-            <tr>
-                <td><label for="password"></label>password : </td>
-                <td><input type="password" name="password" id="password"></td>
-            </tr>
-        </table>
-        <input type="submit" value="로그인">
-        <a href="/members/signUp">회원 가입</a>
-    </form>
+    <div class="col-md-10 mx-auto col-lg-5 mt-5">
+        <form th:action="@{/login}" method="post" class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
+            <h3>
+                Login Page
+                <svg id="homeBtn" xmlns="http://www.w3.org/2000/svg" style="cursor: pointer" width="25" height="25" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                    <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"/>
+                </svg>
+            </h3>
+            <div th:if="${param.error}" class="text-warning">이메일과 비밀번호를 확인해주세요.</div>
+            <div th:if="${param.logout}" class="text-warning">로그아웃 되었습니다.</div>
+            <div class="form-floating mb-3">
+                <input type="email" name="username" class="form-control" id="floatingInput"
+                       placeholder="name@example.com">
+                <label for="floatingInput">Email address</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" name="password" class="form-control" id="floatingPassword"
+                       placeholder="Password">
+                <label for="floatingPassword">Password</label>
+            </div>
+            <button class="w-100 btn btn-lg btn-outline-primary mb-3" type="submit">Login</button>
+            <button id="signUpBtn" class="w-100 btn btn-lg btn-outline-danger" type="button">Sign Up</button>
+        </form>
+    </div>
 </th:block>
 </html>

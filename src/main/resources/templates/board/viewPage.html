@@ -21,6 +21,9 @@
         });
 
         function deleteBoard() {
+            if(!confirm("삭제하시겠습니까?")) {
+                return false;
+            }
             const csrfToken = $("meta[name='_csrf']").attr("content");
             const csrfHeader = $("meta[name='_csrf_header']").attr("content");
             const boardId = $('#boardId').val();
@@ -54,35 +57,34 @@
 <th:block layout:fragment="content">
     <div class="container">
         <div class="boardDiv">
-            <table id="table">
+            <h3 class="mb-3 mt-3">SSONG's BOARD</h3>
+            <table id="table" class="table w-50">
                 <tr>
-                    <td>작성자</td>
-                    <td th:text="${board.member.memberName}"></td>
-                    <td>작성일</td>
-                    <td th:text="${#temporals.format(board.regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                </tr>
-                <tr>
-                    <td>제목</td>
+                    <th scope="col">제목</th>
                     <td colspan="3" th:text="${board.title}"></td>
                 </tr>
                 <tr>
-                    <td>첨부파일</td>
-                    <td colspan="2"><a th:href="'/boards/downloadFile?fileName=' + ${board.s3fileName}" th:text="${board.fileName}"></a></td>
-                    <td><a th:if="${board.filePath != null}" th:href="${board.filePath}">보기</a></td>
+                    <th scope="col">작성자</th>
+                    <td th:text="${board.member.memberName}"></td>
+                    <th scope="col">작성일</th>
+                    <td th:text="${#temporals.format(board.regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 </tr>
                 <tr>
-                    <td>내용</td>
-                    <td colspan="3" th:text="${board.content}"></td>
+                    <th scope="col">첨부파일</th>
+                    <td colspan="2"><a th:href="'/boards/downloadFile?fileName=' + ${board.s3fileName}" th:text="${board.fileName}"></a></td>
+                    <td><a th:if="${board.filePath != null}" th:href="${board.filePath}" class="badge bg-success-subtle border border-success-subtle text-success-emphasis rounded-pill" style="text-decoration: none;">미리보기</a></td>
+                </tr>
+                <tr>
+                    <th scope="col">내용</th>
+                    <td colspan="3"><pre th:text="${board.content}"></pre></td>
                 </tr>
             </table>
         </div>
-        <div>
-            <input type="hidden" id="boardId" th:value="${board.id}">
-            <input type="button" id="boardListBtn" value="목록">
-            <input th:if="${#httpServletRequest.remoteUser == board.member.memberEmail}" type="button" id="modifyBtn"
-                   value="수정">
-            <input th:if="${#httpServletRequest.remoteUser == board.member.memberEmail}" type="button" id="deleteBtn"
-                   value="삭제">
+        <input type="hidden" id="boardId" th:value="${board.id}">
+        <div class="btn-group" role="group" aria-label="Basic outlined example">
+            <button type="button" class="btn btn-outline-success" id="boardListBtn">목록</button>
+            <button type="button" class="btn btn-outline-success" th:if="${#httpServletRequest.remoteUser == board.member.memberEmail}" id="modifyBtn">수정</button>
+            <button type="button" class="btn btn-outline-success" th:if="${#httpServletRequest.remoteUser == board.member.memberEmail}" id="deleteBtn">삭제</button>
         </div>
     </div>
 </th:block>

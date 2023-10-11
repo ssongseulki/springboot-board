@@ -14,6 +14,11 @@
                 $('#fileNameDisplay').text(fileName);
             });
 
+            //게시글 목록
+            $("#boardListBtn").click(function (){
+                location.href = '/boards';
+            })
+
         });
 
         //게시글 저장
@@ -69,18 +74,19 @@
 <th:block layout:fragment="content">
     <div class="container">
         <div class="boardDiv">
-            <table id="table">
+            <h3 class="mb-3 mt-3">게시글 작성</h3>
+            <table id="table" class="table w-50">
                 <tr>
-                    <td>작성자</td>
+                    <th scope="col">작성자</th>
                     <td th:text="${board != null ? board.member.memberName : member.memberName}"></td>
                 </tr>
                 <tr>
-                    <td>제목</td>
-                    <td><input type="text" id="inputTitle" name="title" th:value="${board != null ? board.title : ''}">
+                    <th scope="col">제목</th>
+                    <td><input type="text" id="inputTitle" name="title" class="w-100" th:value="${board != null ? board.title : ''}">
                     </td>
                 </tr>
                 <tr>
-                    <td>첨부파일</td>
+                    <th scope="col">첨부파일</th>
                     <td>
                         <label for="attachedFile" class="custom-file-input-label" style="background-color: #898989; color: #fff; font-size: 12px; padding: 5px; cursor: pointer;">파일 선택</label>
                         <input type="file" id="attachedFile" name="attachedFile" style="display: none;">
@@ -89,16 +95,16 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>내용</td>
-                    <td><textarea id="inputContent" th:text="${board != null ? board.content : ''}"></textarea></td>
+                    <th scope="col">내용</th>
+                    <td><textarea id="inputContent" class="w-100" th:text="${board != null ? board.content : ''}"></textarea></td>
                 </tr>
             </table>
         </div>
-        <div>
-            <!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
-            <input type="hidden" id="memberId" th:value="${board != null ? board.member.id : member.id}">
-            <input type="hidden" id="boardId" th:value="${board != null ? board.id : ''}">
-            <input type="button" id="saveBtn" th:value="${board != null ? '수정' : '등록'}">
+        <input type="hidden" id="memberId" th:value="${board != null ? board.member.id : member.id}">
+        <input type="hidden" id="boardId" th:value="${board != null ? board.id : ''}">
+        <div class="btn-group" role="group" aria-label="Basic outlined example">
+            <input type="button" id="saveBtn" class="btn btn-outline-success" th:value="${board != null ? '수정' : '등록'}">
+            <input type="button" id="boardListBtn" class="btn btn-outline-success" th:value="목록">
         </div>
     </div>
 </th:block>

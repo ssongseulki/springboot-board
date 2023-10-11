@@ -28,49 +28,54 @@
 <th:block layout:fragment="content">
     <div class="container">
         <div class="boardDiv">
-            <h1>게시판</h1>
-            <form th:action="@{/logout}" method="post">
-                <input type="submit" value="로그아웃">
-            </form>
-            <table id="table">
-                <thead>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+                <h1 class="mb-3" id="homeBtn" style="cursor: pointer">
+                    SSONG's BOARD
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                        <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"/>
+                    </svg>
+                </h1>
+                <input type="button" id="writeBtn" class="btn btn-outline-danger" value="글쓰기">
+            </div>
+            <table id="table" class="table table-hover">
+                <thead class="table-light">
                 <tr>
-                    <td>순번</td>
-                    <td>제목</td>
-                    <td>작성자</td>
-                    <td>조회수</td>
-                    <td>등록일</td>
+                    <th scope="col">순번</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">작성자</th>
+                    <th scope="col">조회수</th>
+                    <th scope="col">등록일</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="board,rowStatus : ${boardList}">
+                <tr th:each="board,rowStatus : ${boardList}" style="cursor: pointer">
                     <input type="hidden" id="boardId" th:value="${board.id}">
-                    <td th:text="${boardList.totalElements - (rowStatus.index + boardList.size * boardList.number)} "></td>
+                    <th th:text="${boardList.totalElements - (rowStatus.index + boardList.size * boardList.number)}" scope="row"></th>
                     <td th:text="${board.title}" class="boardTitle"></td>
                     <td th:if="${board.member != null}" th:text="${board.member.memberName}"></td>
                     <td th:text="${board.view}"></td>
-                    <td th:text="${#temporals.format(board.regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    <td th:text="${#temporals.format(board.regDate, 'yyyy-MM-dd')}"></td>
                 </tr>
                 </tbody>
             </table>
-            <div th:if="${boardList.totalPages > 1}" class="pagination">
-                <ul>
-                    <li th:class="${boardList.number == 0 ? 'disabled' : ''}">
-                        <a th:href="@{${'/boards?page=' + (boardList.number)}}">이전</a>
+            <nav th:if="${boardList.totalPages > 1}" class="pagination" aria-label="Page navigation example" style="justify-content: center">
+                <ul class="pagination" >
+                    <li th:class="${boardList.number == 0 ? 'disabled' : ''}" class="page-item">
+                        <a th:href="@{${'/boards?page=' + (boardList.number)}}" class="page-link" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
                     </li>
-                    <li th:each="pageNumber : ${#numbers.sequence(1, boardList.totalPages)}"
+                    <li class="page-item" th:each="pageNumber : ${#numbers.sequence(1, boardList.totalPages)}"
                         th:class="${boardList.number + 1 == pageNumber} ? 'active' : ''">
-                        <a th:href="@{${'/boards?page=' + pageNumber}}" th:text="${pageNumber}"></a>
+                        <a class="page-link" th:href="@{${'/boards?page=' + pageNumber}}" th:text="${pageNumber}"></a>
                     </li>
-                    <li th:class="${boardList.number + 1 == boardList.totalPages ? 'disabled' : ''}">
-                        <a th:href="@{${'/boards?page=' + (boardList.number + 2)}}">다음</a>
+                    <li th:class="${boardList.number + 1 == boardList.totalPages ? 'disabled' : ''}" class="page-item">
+                        <a th:href="@{${'/boards?page=' + (boardList.number + 2)}}" class="page-link" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
                     </li>
                 </ul>
-            </div>
-        </div>
-        <div>
-            <input type="button" id="writeBtn" value="글쓰기">
-            <input type="button" id="homeBtn" value="홈으로">
+            </nav>
         </div>
     </div>
 </th:block>

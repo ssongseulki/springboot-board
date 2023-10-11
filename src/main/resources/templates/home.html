@@ -5,9 +5,21 @@
 <th:block layout:fragment="script">
     <script>
         $(document).ready(function(){
+            $("#boardListBtn").click(function (){
+                location.href = '/boards';
+            });
+
+            $("#signUpBtn").click(function (){
+               location.href = '/members/signUp';
+            });
+
+            $("#loginBtn").click(function (){
+                location.href = '/login';
+            });
+
             $('#memberListBtn').click(function(){
                if($('#user').val() == 'ssong@naver.com'){
-                   $(this).attr('href','/members/paging');
+                   location.href = '/members/paging';
                }else{
                     alert('회원 목록에 대한 권한이 없습니다.');
                }
@@ -16,17 +28,26 @@
     </script>
 </th:block>
 <th:block layout:fragment="content">
-    <div class="container">
-        <div class="memberDiv">
-            <h1>Home</h1>
-            <a href="/boards">게시판 바로가기</a>
-            <div>
-                <form th:action="@{/logout}" method="post">
-                    <input type="submit" th:if="${user != null}" value="로그아웃">
-                </form>
-                <a href="/members/signUp" th:if="${user == null}">회원가입</a>
-                <a href="" id="memberListBtn">회원 목록</a>
-                <input type="hidden" id="user" th:value="${user}">
+    <div class="container col-xl-10 col-xxl-8 px-4 py-5">
+        <div class="row align-items-center g-lg-5 py-5">
+            <div class="col-lg-7 text-center text-lg-start">
+                <h1 class="display-4 fw-bold lh-1 text-body-emphasis mb-3">SSONG's BOARD</h1>
+                <p class="col-lg-10 fs-4">springboot를 사용한 게시판 프로젝트입니다.</p>
+            </div>
+            <div class="col-md-10 mx-auto col-lg-5">
+                <div class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
+                    <span id="boardListBtn" style="cursor: pointer" class="mb-3 fs-6 badge bg-success-subtle border border-success-subtle text-success-emphasis rounded-pill">게시판 바로가기</span>
+                    <div class="btn-group" role="group" aria-label="Basic outlined example">
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" th:if="${user != null}" class="btn btn-outline-success">Logout</button>
+                            <button type="button" id="loginBtn" th:if="${user == null}" class="btn btn-outline-success">Login</button>
+                            <button type="button" id="signUpBtn" th:if="${user == null}" class="btn btn-outline-success">Sign Up</button>
+                            <button type="button" id="memberListBtn" class="btn btn-outline-success">회원 목록</button>
+                        </form>
+                    </div>
+                    <input type="hidden" id="user" th:value="${user}">
+                    <hr class="my-4">
+                </div>
             </div>
         </div>
     </div>
