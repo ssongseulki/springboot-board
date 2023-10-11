@@ -35,8 +35,15 @@ public class MemberController {
             model.addAttribute("error", "형식에 맞는 정보를 입력하시기 바랍니다.");
             return "member/createMemberForm";
         }
-        memberService.join(memberPostDto);
-        return "redirect:/";
+        boolean checkSave = memberService.join(memberPostDto);
+        if (checkSave) {
+            model.addAttribute("msg", "가입되었습니다.");
+            return "/login";
+        } else {
+            model.addAttribute("msg", "중복된 아이디입니다.");
+            return "member/createMemberForm";
+        }
+
     }
 
     //전체 회원 조회

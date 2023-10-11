@@ -5,18 +5,22 @@
 <th:block layout:fragment="script">
     <script>
         $(document).ready(function(){
+            //게시판 목록
             $("#boardListBtn").click(function (){
                 location.href = '/boards';
             });
 
+            //회원가입
             $("#signUpBtn").click(function (){
                location.href = '/members/signUp';
             });
 
+            //로그인
             $("#loginBtn").click(function (){
                 location.href = '/login';
             });
 
+            //회원 목록
             $('#memberListBtn').click(function(){
                if($('#user').val() == 'ssong@naver.com'){
                    location.href = '/members/paging';

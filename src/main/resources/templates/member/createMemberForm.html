@@ -29,7 +29,8 @@
 </th:block>
 <th:block layout:fragment="content">
     <div class="container">
-        <div th:if="${error}" th:text="${error}"></div>
+        <h5 th:if="${msg}" th:text="${msg}" class="text-warning mt-3 font-weight-bold"></h5>
+        <h5 th:if="${error}" th:text="${error}" class="text-warning mt-3 font-weight-bold"></h5>
         <h3 class="mb-3 mt-3">
             회원가입
             <svg id="homeBtn" style="cursor: pointer" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">

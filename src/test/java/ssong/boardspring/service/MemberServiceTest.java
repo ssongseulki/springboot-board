@@ -31,10 +31,8 @@ public class MemberServiceTest {
         memberDto.setMemberPhone("01011110000");
         memberDto.setMemberPw("1234");
 
-        Long saveId = memberService.join(memberDto);
-        Optional<Member> findMemberId = memberService.findOne(saveId);
-
-        assertThat(findMemberId).isNotNull();
+        boolean checkSave = memberService.join(memberDto);
+        assertThat(checkSave).isTrue();
     }
 
     @Test
@@ -52,8 +50,10 @@ public class MemberServiceTest {
         member2.setMemberPhone("01011110000");
         member2.setMemberPw("1234");
 
-        memberService.join(member1);
-        IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(member2));
-        assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
+        boolean isDuplicate1 = memberService.join(member1);
+        boolean isDuplicate2 = memberService.join(member2);
+
+        // 중복 여부 확인
+        assertThat(isDuplicate2).isFalse();
     }
 }
