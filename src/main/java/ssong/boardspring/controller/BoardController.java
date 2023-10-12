@@ -37,7 +37,6 @@ public class BoardController {
     }
 
 
-
     //게시판 목록
     @GetMapping("")
     public ModelAndView getBoards(@RequestParam(defaultValue = "1") int page) {
@@ -81,15 +80,15 @@ public class BoardController {
 
     //게시글 작성
     @PostMapping("")
-    public ResponseEntity<String> createBoard( @Validated @ModelAttribute("boardRequest") BoardDto boardDto,
-                                               @RequestPart(value = "attachedFile", required = false) MultipartFile multipartFile,
-                                               BindingResult bindingResult) throws IOException {
+    public ResponseEntity<String> createBoard(@Validated @ModelAttribute("boardRequest") BoardDto boardDto,
+                                              @RequestPart(value = "attachedFile", required = false) MultipartFile multipartFile,
+                                              BindingResult bindingResult) throws IOException {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("유효성 검사에 실패하였습니다.");
         }
         //첨부파일 AWS S3 저장
-        if(multipartFile != null){
+        if (multipartFile != null) {
             uploadFile(multipartFile, boardDto);
         }
 
@@ -97,20 +96,20 @@ public class BoardController {
         Long result = boardService.createBoard(boardDto);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-            .body(result.toString());
+                .body(result.toString());
     }
 
     //게시글 수정
     @PatchMapping("/{boardId}")
-    public ResponseEntity<String> updateBoard( @Validated @ModelAttribute("boardRequest") BoardDto boardDto,
-                                               @RequestPart(value = "attachedFile", required = false) MultipartFile multipartFile,
-                                               BindingResult bindingResult, @PathVariable String boardId) throws IOException {
+    public ResponseEntity<String> updateBoard(@Validated @ModelAttribute("boardRequest") BoardDto boardDto,
+                                              @RequestPart(value = "attachedFile", required = false) MultipartFile multipartFile,
+                                              BindingResult bindingResult, @PathVariable String boardId) throws IOException {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("유효성 검사에 실패하였습니다.");
         }
         //첨부파일 AWS S3 저장
-        if(multipartFile != null){
+        if (multipartFile != null) {
             String originalFileName = boardDto.getS3fileName();
             //기존 파일 삭제
             s3UploadService.deleteImage(originalFileName);
@@ -134,7 +133,7 @@ public class BoardController {
         String originalFileName = board.getS3fileName();
         boolean result = boardService.deleteBoard(boardId);
         if (result) {
-            if(!originalFileName.equals(null)){
+            if (originalFileName != null) {
                 s3UploadService.deleteImage(originalFileName);
             }
             return ResponseEntity.ok("삭제되었습니다.");
