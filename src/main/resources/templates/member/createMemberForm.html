@@ -4,14 +4,14 @@
 
 <th:block layout:fragment="script">
     <script>
-        $(document).ready(function (){
+        $(document).ready(function () {
             //홈버튼
             $('#homeBtn').click(function () {
                 location.href = '/';
             });
 
-            $('form').submit(function(event) {
-                if($('#memberName').val() === '') {
+            $('form').submit(function (event) {
+                if ($('#memberName').val() === '') {
                     alert('이름을 입력하세요.');
                     event.preventDefault();
                 } else if ($('#memberEmail').val() === '') {
@@ -29,36 +29,44 @@
 </th:block>
 <th:block layout:fragment="content">
     <div class="container">
-        <h5 th:if="${msg}" th:text="${msg}" class="text-warning mt-3 font-weight-bold"></h5>
-        <h5 th:if="${error}" th:text="${error}" class="text-warning mt-3 font-weight-bold"></h5>
-        <h3 class="mb-3 mt-3">
-            회원가입
-            <svg id="homeBtn" style="cursor: pointer" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
-                <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"/>
-            </svg>
-        </h3>
-        <form th:action="@{/members/signUp}" method="post">
-            <table class="table w-50">
-                <tr>
-                    <th scope="col"><label for="memberName">이름</label></th>
-                    <td><input type="text" id="memberName" class="w-100" name="memberName" placeholder="이름을 입력하세요."></td>
-                </tr>
-                <tr>
-                    <th scope="col"><label for="memberEmail">이메일</label></th>
-                    <td><input type="text" id="memberEmail" class="w-100" name="memberEmail" placeholder="이메일을 입력하세요."></td>
-                </tr>
-                <tr>
-                    <th scope="col"><label for="memberPhone">연락처</label></th>
-                    <td><input type="text" id="memberPhone" class="w-100" name="memberPhone" placeholder="연락처를 입력하세요."></td>
-                </tr>
-                <tr>
-                    <th scope="col"><label for="memberPw">비밀번호</label></th>
-                    <td><input type="password" id="memberPw" class="w-100" name="memberPw" placeholder="비밀번호를 입력하세요."></td>
-                </tr>
-            </table>
+        <div style="margin-right: 700px;">
+            <h5 th:if="${error}" th:text="${error}" class="text-danger mt-3 font-weight-bold"></h5>
+            <h3 class="mb-3 mt-3">
+                회원가입
+                <svg id="homeBtn" style="cursor: pointer" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                     fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                    <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"/>
+                </svg>
+            </h3>
+            <form th:action="@{/members/signUp}" method="post">
+                <table class="table">
+                    <tr>
+                        <th scope="col"><label for="memberName">이름</label></th>
+                        <td><input type="text" id="memberName" class="w-100" name="memberName" placeholder="이름을 입력하세요.">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="col"><label for="memberEmail">이메일</label></th>
+                        <td><input type="text" id="memberEmail" class="w-100" name="memberEmail"
+                                   placeholder="이메일을 입력하세요.">
+                            <h7 th:if="${msg}" th:text="${msg}" class="text-danger mt-3 font-weight-bold"></h7>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="col"><label for="memberPhone">연락처</label></th>
+                        <td><input type="text" id="memberPhone" class="w-100" name="memberPhone"
+                                   placeholder="연락처를 입력하세요."></td>
+                    </tr>
+                    <tr>
+                        <th scope="col"><label for="memberPw">비밀번호</label></th>
+                        <td><input type="password" id="memberPw" class="w-100" name="memberPw"
+                                   placeholder="비밀번호를 입력하세요."></td>
+                    </tr>
+                </table>
 
-            <button id="saveBtn" type="submit" class="btn btn-outline-success">등록</button>
-        </form>
+                <button id="saveBtn" type="submit" class="btn btn-outline-success">등록</button>
+            </form>
+        </div>
     </div>
 </th:block>
 </html>

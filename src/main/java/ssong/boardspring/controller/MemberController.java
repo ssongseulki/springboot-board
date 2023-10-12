@@ -40,7 +40,7 @@ public class MemberController {
             model.addAttribute("msg", "가입되었습니다.");
             return "/login";
         } else {
-            model.addAttribute("msg", "중복된 아이디입니다.");
+            model.addAttribute("msg", "이미 등록된 이메일입니다.");
             return "member/createMemberForm";
         }
 

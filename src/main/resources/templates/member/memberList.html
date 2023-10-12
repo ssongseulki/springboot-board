@@ -42,20 +42,24 @@
                 </tr>
                 </tbody>
             </table>
-            <div th:if="${memberList.totalPages > 1}" class="pagination">
-                <ul>
-                    <li th:class="${memberList.number == 0 ? 'disabled' : ''}">
-                        <a th:href="@{${'/members/paging?page=' + (memberList.number)}}">이전</a>
+            <nav th:if="${memberList.totalPages > 1}" class="pagination" aria-label="Page navigation example" style="justify-content: center">
+                <ul class="pagination" >
+                    <li th:class="${memberList.number == 0 ? 'disabled' : ''}" class="page-item">
+                        <a th:href="@{${'/members/paging?page=' + (memberList.number)}}" class="page-link" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
                     </li>
-                    <li th:each="pageNumber : ${#numbers.sequence(1, memberList.totalPages)}"
+                    <li class="page-item" th:each="pageNumber : ${#numbers.sequence(1, memberList.totalPages)}"
                         th:class="${memberList.number + 1 == pageNumber} ? 'active' : ''">
-                        <a th:href="@{${'/members/paging?page=' + pageNumber}}" th:text="${pageNumber}"></a>
+                        <a class="page-link" th:href="@{${'/members/paging?page=' + pageNumber}}" th:text="${pageNumber}"></a>
                     </li>
-                    <li th:class="${memberList.number + 1 == memberList.totalPages ? 'disabled' : ''}">
-                        <a th:href="@{${'/members/paging?page=' + (memberList.number + 2)}}">다음</a>
+                    <li th:class="${memberList.number + 1 == memberList.totalPages ? 'disabled' : ''}" class="page-item">
+                        <a th:href="@{${'/members/paging?page=' + (memberList.number + 2)}}" class="page-link" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
                     </li>
                 </ul>
-            </div>
+            </nav>
         </div>
     </div>
 </th:block>

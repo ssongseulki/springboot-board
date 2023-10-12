@@ -73,9 +73,9 @@
 </th:block>
 <th:block layout:fragment="content">
     <div class="container">
-        <div class="boardDiv">
+        <div class="boardDiv" style="margin-right: 700px;">
             <h3 class="mb-3 mt-3">게시글 작성</h3>
-            <table id="table" class="table w-50">
+            <table id="table" class="table">
                 <tr>
                     <th scope="col">작성자</th>
                     <td th:text="${board != null ? board.member.memberName : member.memberName}"></td>
@@ -88,7 +88,7 @@
                 <tr>
                     <th scope="col">첨부파일</th>
                     <td>
-                        <label for="attachedFile" class="custom-file-input-label" style="background-color: #898989; color: #fff; font-size: 12px; padding: 5px; cursor: pointer;">파일 선택</label>
+                        <label for="attachedFile" class="custom-file-input-label" style="background-color: #198754; color: #fff; font-size: 12px; padding: 5px; cursor: pointer;">파일 선택</label>
                         <input type="file" id="attachedFile" name="attachedFile" style="display: none;">
                         <span id="fileNameDisplay" th:text="${board != null ? board.fileName : ''}"></span>
                         <input type="hidden" id="s3fileName" name="s3fileName" th:value="${board != null ? board.s3fileName : ''}">
