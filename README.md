@@ -18,7 +18,7 @@
 >> Java Spring Boot, JPA
 
 >FRONT_END
->> Thymeleaf, Jquery
+>> Thymeleaf, Jquery, Bootstrap
 
 ### 2. ER_Diagram
 <img src="https://github.com/ssongseulki/mvc-board/assets/68680087/d79eb2ff-5ec8-4470-aefb-f8490aad06f0" width = "600" height = "300">
