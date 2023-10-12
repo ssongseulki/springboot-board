@@ -1,4 +1,4 @@
-package ssong.boardspring.service;
+package ssong.boardspring.serviceImpl;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,11 +14,11 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-public class CustomUserDetailService implements UserDetailsService {
+public class CustomUserDetailServiceImpl implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
-    public CustomUserDetailService(MemberRepository memberRepository) {
+    public CustomUserDetailServiceImpl(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
 
