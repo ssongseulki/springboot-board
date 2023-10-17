@@ -1,6 +1,6 @@
 # SpringBoot 게시판 CRUD &nbsp;&nbsp;  <a href="http:13.124.205.54:8080/"><img src="https://img.shields.io/badge/SSONG's BOARD-E4405F?style=flat-square&logoColor=white"/></a> 👈Click!
 
-* 기본 CRUD 게시판을 Server Side Rendering 방식으로 구현한 연습 프로젝트</br>
+* 기본 CRUD 게시판을 REST API 및 SSR(Server Side Rendering) 방식으로 구현한 연습 프로젝트</br>
 * Service - ServiceImpl 구조를 사용하여 인터페이스와 구현체를 분리함으로써 구현체는 독립적으로 변경하거나 확장하여도 사용하는 클라이언트에는 영향을 주지 않도록 설계.
 * Spring Security를 사용한 회원 인증 처리 구현 </br>
 * AWS EC2 클라우드 서버 연동 </br>
