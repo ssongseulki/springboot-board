@@ -24,10 +24,10 @@ public class CustomUserDetailServiceImpl implements UserDetailsService {
 
     @Override
     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String id){
+    public UserDetails loadUserByUsername(String id) {
         Optional<Member> member = memberRepository.findBymemberEmail(id);
 
-        if(member.isPresent()){
+        if (member.isPresent()) {
             Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
             grantedAuthorities.add(new SimpleGrantedAuthority("USER")); //USER 라는 역할 부여
 
@@ -37,7 +37,7 @@ public class CustomUserDetailServiceImpl implements UserDetailsService {
                     foundMember.getMemberPw(),
                     grantedAuthorities
             );
-        }else{
+        } else {
             return null;
         }
     }

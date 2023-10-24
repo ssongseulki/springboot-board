@@ -28,15 +28,8 @@ public abstract class CommonEntity {
         return regDate;
     }
 
-    public void setRegDate(LocalDateTime regDate) {
-        this.regDate = regDate;
-    }
-
     public LocalDateTime getModDate() {
         return modDate;
     }
 
-    public void setModDate(LocalDateTime modDate) {
-        this.modDate = modDate;
-    }
 }

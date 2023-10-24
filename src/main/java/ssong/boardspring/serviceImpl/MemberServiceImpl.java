@@ -27,7 +27,7 @@ public class MemberServiceImpl implements MemberService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    //회원가입
+    //    회원가입
     public boolean join(MemberCreateDto memberCreateDto) {
         memberCreateDto.setMemberPw(bCryptPasswordEncoder.encode(memberCreateDto.getMemberPw()));
         boolean isDuplicate = checkDuplicateMember(memberCreateDto.toEntity());
@@ -40,28 +40,28 @@ public class MemberServiceImpl implements MemberService {
 
     }
 
-    //중복회원 검증
+    //    중복회원 검증
     public boolean checkDuplicateMember(Member member) {
         return memberRepository.findBymemberEmail(member.getMemberEmail()).isPresent();
     }
 
-    //전체 회원 조회
+    //    전체 회원 조회
     public List<Member> findMembers() {
         return memberRepository.findAll();
     }
 
-    //전체 회원 조회 For Paging
+    //    전체 회원 조회 For Paging
     public Page<Member> findMembersForPaging(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by("id").descending());
         return memberRepository.findAll(pageable);
     }
 
-    //회원 조회 By ID
+    //    회원 조회 By ID
     public Optional<Member> findOne(Long memberId) {
         return memberRepository.findById(memberId);
     }
 
-    //회원 정보 조회 By Email
+    //    회원 정보 조회 By Email
     public Member findByMemberEmail(String memberEmail) {
         Optional<Member> optionalMember = memberRepository.findBymemberEmail(memberEmail);
         if (optionalMember.isPresent()) {
@@ -69,4 +69,5 @@ public class MemberServiceImpl implements MemberService {
         }
         return null;
     }
+
 }

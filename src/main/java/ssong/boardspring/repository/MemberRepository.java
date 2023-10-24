@@ -8,17 +8,19 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MemberRepository {
-    //회원가입
+    //    회원가입
     Member save(Member member);
 
-    //아이디 회원 조회
+    //    아이디 회원 조회
     Optional<Member> findById(long id);
 
-    //email 회원 조회
+    //    email 회원 조회
     Optional<Member> findBymemberEmail(String memberEmail);
 
-    //모두 조회
+    //    모두 조회
     List<Member> findAll();
 
+    //    전체 회원 조회 For Paging
     Page<Member> findAll(Pageable pageable);
+
 }

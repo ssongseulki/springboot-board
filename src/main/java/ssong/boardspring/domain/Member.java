@@ -36,43 +36,20 @@ public class Member {
         this.id = id;
     }
 
-    public List<Board> getBoardList() {
-        return boardList;
-    }
-
-    public void setBoardList(List<Board> boardList) {
-        this.boardList = boardList;
-    }
-
     public String getMemberName() {
         return memberName;
-    }
-
-    public void setMemberName(String memberName) {
-        this.memberName = memberName;
     }
 
     public String getMemberEmail() {
         return memberEmail;
     }
 
-    public void setMemberEmail(String memberEmail) {
-        this.memberEmail = memberEmail;
-    }
-
     public String getMemberPhone() {
         return memberPhone;
-    }
-
-    public void setMemberPhone(String memberPhone) {
-        this.memberPhone = memberPhone;
     }
 
     public String getMemberPw() {
         return memberPw;
     }
 
-    public void setMemberPw(String memberPw) {
-        this.memberPw = memberPw;
-    }
 }

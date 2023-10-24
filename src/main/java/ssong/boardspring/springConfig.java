@@ -7,7 +7,6 @@ import ssong.boardspring.repository.MemberRepository;
 //수동으로 스프링 빈 등록
 @Configuration
 public class springConfig {
-
     //Spring data Jpa
     private final MemberRepository memberRepository;
 

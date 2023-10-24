@@ -25,17 +25,17 @@ public class MemberController {
     }
 
     @GetMapping("/signUp")
-    public String signUp(){
+    public String signUp() {
         return "member/createMemberForm";
     }
 
     @PostMapping("/signUp")
-    public String createMember(@Validated @ModelAttribute("memberCreateDto") MemberCreateDto memberPostDto, BindingResult bindingResult, Model model){
-        if(bindingResult.hasErrors()){
+    public String createMember(@Validated @ModelAttribute("memberCreateDto") MemberCreateDto memberCreateDto, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("error", "형식에 맞는 정보를 입력하시기 바랍니다.");
             return "member/createMemberForm";
         }
-        boolean checkSave = memberService.join(memberPostDto);
+        boolean checkSave = memberService.join(memberCreateDto);
         if (checkSave) {
             model.addAttribute("msg", "가입되었습니다.");
             return "/login";
@@ -46,17 +46,17 @@ public class MemberController {
 
     }
 
-    //전체 회원 조회
+    //    전체 회원 조회
     @GetMapping("")
-    public String getMembers(Model model){
+    public String getMembers(Model model) {
         List<Member> memberList = memberService.findMembers();
         model.addAttribute("memberList", memberList);
         return "member/memberList";
     }
 
-    //전체 회원 조회 For Paging
+    //    전체 회원 조회 For Paging
     @GetMapping("/paging")
-    public String membersForPaging(Model model, @RequestParam(defaultValue = "1") int page){
+    public String membersForPaging(Model model, @RequestParam(defaultValue = "1") int page) {
         int pageSize = 5;
 
         Page<Member> memberList = memberService.findMembersForPaging(page, pageSize);

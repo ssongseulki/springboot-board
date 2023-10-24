@@ -9,16 +9,19 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class HomeController {
 
-    @GetMapping({"/","home"})
-    public String home(Model model, HttpServletRequest request){
+    //    메인 화면
+    @GetMapping({"/", "home"})
+    public String home(Model model, HttpServletRequest request) {
         String user = request.getRemoteUser();
         model.addAttribute("user", user);
         return "home";
     }
 
+    //    로그인 화면
     @GetMapping("/login")
     public String login() {
         return "login";
     }
 
 }
+

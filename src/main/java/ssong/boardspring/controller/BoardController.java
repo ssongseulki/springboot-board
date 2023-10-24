@@ -37,7 +37,7 @@ public class BoardController {
     }
 
 
-    //게시판 목록
+    //    게시판 목록
     @GetMapping("")
     public ModelAndView getBoards(@RequestParam(defaultValue = "1") int page) {
         int pageSize = 10;
@@ -48,7 +48,7 @@ public class BoardController {
         return mv;
     }
 
-    //게시글 조회
+    //    게시글 조회
     @GetMapping("/{boardId}")
     public ModelAndView getBoard(@PathVariable Long boardId) {
         ModelAndView mv = new ModelAndView("board/viewPage");
@@ -61,7 +61,7 @@ public class BoardController {
         return mv;
     }
 
-    //게시글 작성 화면
+    //    게시글 작성 화면
     @GetMapping("/writePage")
     public String writePage(Model model, HttpServletRequest request) {
         String remoteUser = request.getRemoteUser();
@@ -70,7 +70,7 @@ public class BoardController {
         return "board/writePage";
     }
 
-    //게시글 수정 화면
+    //    게시글 수정 화면
     @GetMapping("/modifyPage/{boardId}")
     public ModelAndView modifyPage(@Validated @PathVariable Long boardId) {
         ModelAndView mv = new ModelAndView("board/writePage");
@@ -78,7 +78,7 @@ public class BoardController {
         return mv;
     }
 
-    //게시글 작성
+    //    게시글 작성
     @PostMapping("")
     public ResponseEntity<String> createBoard(@Validated @ModelAttribute("boardRequest") BoardDto boardDto,
                                               @RequestPart(value = "attachedFile", required = false) MultipartFile multipartFile,
@@ -87,19 +87,19 @@ public class BoardController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("유효성 검사에 실패하였습니다.");
         }
-        //첨부파일 AWS S3 저장
+        //  첨부파일 AWS S3 저장
         if (multipartFile != null) {
             uploadFile(multipartFile, boardDto);
         }
 
-        //board 저장
+        //  board 저장
         Long result = boardService.createBoard(boardDto);
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(result.toString());
     }
 
-    //게시글 수정
+    //    게시글 수정
     @PatchMapping("/{boardId}")
     public ResponseEntity<String> updateBoard(@Validated @ModelAttribute("boardRequest") BoardDto boardDto,
                                               @RequestPart(value = "attachedFile", required = false) MultipartFile multipartFile,
@@ -108,10 +108,10 @@ public class BoardController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("유효성 검사에 실패하였습니다.");
         }
-        //첨부파일 AWS S3 저장
+        //  첨부파일 AWS S3 저장
         if (multipartFile != null) {
             String originalFileName = boardDto.getS3fileName();
-            //기존 파일 삭제
+            //  기존 파일 삭제
             s3UploadService.deleteImage(originalFileName);
             uploadFile(multipartFile, boardDto);
         }
@@ -126,7 +126,7 @@ public class BoardController {
 
     }
 
-    //게시글 삭제
+    //    게시글 삭제
     @DeleteMapping("/{boardId}")
     public ResponseEntity<String> deleteBoard(@Validated @PathVariable Long boardId) {
         Board board = boardService.findOne(boardId);
@@ -142,7 +142,7 @@ public class BoardController {
                 .body("게시글을 찾을 수 없습니다.");
     }
 
-    //게시글 첨부파일 업로드
+    //    게시글 첨부파일 업로드
     public void uploadFile(@RequestPart(value = "attachedFile", required = false) MultipartFile multipartFile, BoardDto boardDto) throws IOException {
         Map<String, Object> attachedFile = s3UploadService.saveFile(multipartFile);
         boardDto.setFileName((String) attachedFile.get("fileName"));
@@ -150,11 +150,10 @@ public class BoardController {
         boardDto.setS3fileName((String) attachedFile.get("s3fileName"));
     }
 
-    //게시글 첨부파일 다운로드
+    //    게시글 첨부파일 다운로드
     @GetMapping("/downloadFile")
     public ResponseEntity<UrlResource> downloadFile(String fileName) {
         return s3UploadService.downloadFile(fileName);
     }
-
 
 }

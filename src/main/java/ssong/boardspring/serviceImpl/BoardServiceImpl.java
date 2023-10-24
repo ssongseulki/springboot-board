@@ -26,7 +26,7 @@ public class BoardServiceImpl implements BoardService {
         this.memberService = memberService;
     }
 
-    //게시글 작성
+    //    게시글 작성
     public long createBoard(BoardDto boardDto) {
         Board board = new Board();
         board.setTitle(boardDto.getBoardTitle());
@@ -40,7 +40,7 @@ public class BoardServiceImpl implements BoardService {
         return board.getId();
     }
 
-    //게시글 수정
+    //    게시글 수정
     public Long updateBoard(BoardDto boardDto) {
         Board board = boardRepository.findById(boardDto.getId()).orElse(null);
         if (board != null) {
@@ -57,19 +57,19 @@ public class BoardServiceImpl implements BoardService {
 
     }
 
-    //게시글 목록 FOR PAGINATION
+    //    게시글 목록 FOR PAGINATION
     public Page<Board> findBoardList(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by("regDate").descending());
         return (Page<Board>) boardRepository.findAll(pageable);
     }
 
-    //게시글 조회
+    //    게시글 조회
     public Board findOne(Long boardId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
         return optionalBoard.orElse(null);
     }
 
-    //게시글 삭제
+    //    게시글 삭제
     public boolean deleteBoard(Long boardId) {
         try {
             boardRepository.deleteById(boardId);
@@ -79,7 +79,7 @@ public class BoardServiceImpl implements BoardService {
         }
     }
 
-    //게시글 조회수 증가
+    //    게시글 조회수 증가
     public boolean incrementHitCnt(Long boardId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
         if (optionalBoard.isPresent()) {
@@ -90,4 +90,5 @@ public class BoardServiceImpl implements BoardService {
         }
         return false;
     }
+
 }

@@ -26,7 +26,6 @@ public class Board extends CommonEntity {
     private String s3fileName;
     private String filePath;
 
-
     public long getId() {
         return id;
     }
