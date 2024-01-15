@@ -18,6 +18,7 @@ import ssong.boardspring.service.BoardService;
 import ssong.boardspring.service.MemberService;
 import ssong.boardspring.service.S3UploadService;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Map;
@@ -81,12 +82,8 @@ public class BoardController {
     //    게시글 작성
     @PostMapping("")
     public ResponseEntity<String> createBoard(@Validated @ModelAttribute("boardRequest") BoardDto boardDto,
-                                              @RequestPart(value = "attachedFile", required = false) MultipartFile multipartFile,
-                                              BindingResult bindingResult) throws IOException {
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("유효성 검사에 실패하였습니다.");
-        }
+                                              @RequestPart(value = "attachedFile", required = false) MultipartFile multipartFile) throws IOException {
+
         //  첨부파일 AWS S3 저장
         if (multipartFile != null) {
             uploadFile(multipartFile, boardDto);
@@ -103,11 +100,7 @@ public class BoardController {
     @PatchMapping("/{boardId}")
     public ResponseEntity<String> updateBoard(@Validated @ModelAttribute("boardRequest") BoardDto boardDto,
                                               @RequestPart(value = "attachedFile", required = false) MultipartFile multipartFile,
-                                              BindingResult bindingResult, @PathVariable String boardId) throws IOException {
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("유효성 검사에 실패하였습니다.");
-        }
+                                              @PathVariable String boardId) throws IOException {
         //  첨부파일 AWS S3 저장
         if (multipartFile != null) {
             String originalFileName = boardDto.getS3fileName();
@@ -120,15 +113,14 @@ public class BoardController {
         if (result != null) {
             return ResponseEntity.ok(result.toString());
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("게시글을 찾을 수 없습니다.");
+            throw new EntityNotFoundException();
         }
 
     }
 
     //    게시글 삭제
     @DeleteMapping("/{boardId}")
-    public ResponseEntity<String> deleteBoard(@Validated @PathVariable Long boardId) {
+    public ResponseEntity<String> deleteBoard(@Validated @PathVariable Long boardId) throws EntityNotFoundException {
         Board board = boardService.findOne(boardId);
         String originalFileName = board.getS3fileName();
         boolean result = boardService.deleteBoard(boardId);
@@ -137,9 +129,9 @@ public class BoardController {
                 s3UploadService.deleteImage(originalFileName);
             }
             return ResponseEntity.ok("삭제되었습니다.");
+        } else{
+            throw new EntityNotFoundException();
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body("게시글을 찾을 수 없습니다.");
     }
 
     //    게시글 첨부파일 업로드

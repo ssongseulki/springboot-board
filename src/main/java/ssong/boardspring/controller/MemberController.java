@@ -29,12 +29,9 @@ public class MemberController {
         return "member/createMemberForm";
     }
 
+    //      회원 가입
     @PostMapping("/signUp")
-    public String createMember(@Validated @ModelAttribute("memberCreateDto") MemberCreateDto memberCreateDto, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("error", "형식에 맞는 정보를 입력하시기 바랍니다.");
-            return "member/createMemberForm";
-        }
+    public String createMember(@Validated @ModelAttribute("memberCreateDto") MemberCreateDto memberCreateDto, Model model) {
         boolean checkSave = memberService.join(memberCreateDto);
         if (checkSave) {
             model.addAttribute("msg", "가입되었습니다.");

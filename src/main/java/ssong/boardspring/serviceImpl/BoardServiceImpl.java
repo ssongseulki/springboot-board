@@ -71,12 +71,8 @@ public class BoardServiceImpl implements BoardService {
 
     //    게시글 삭제
     public boolean deleteBoard(Long boardId) {
-        try {
-            boardRepository.deleteById(boardId);
-            return true;
-        } catch (EmptyResultDataAccessException e) {
-            return false;
-        }
+        boardRepository.deleteById(boardId);
+        return true;
     }
 
     //    게시글 조회수 증가
