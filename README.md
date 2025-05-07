@@ -1,4 +1,4 @@
-# SpringBoot 게시판 CRUD &nbsp;&nbsp;  
+# SpringBoot 게시판 프로젝트(CRUD) &nbsp;&nbsp;  
 SpringBoot와 JPA, AWS 등 추가 공부를 위한 개인 프로젝트입니다. 
 추가적으로 확장해 나아갈 예정입니다.
 * Service - ServiceImpl 구조를 사용하여 인터페이스와 구현체를 분리함으로써 구현체는 독립적으로 변경하거나 확장하여도 사용하는 클라이언트에는 영향을 주지 않도록 설계.
