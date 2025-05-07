@@ -11,7 +11,7 @@ SpringBoot와 JPA, AWS 등 추가 공부를 위한 개인 프로젝트입니다.
 * JUnit을 사용하여 단위테스트 코드 작성</br>
 
 
-## Discription
+## Description
 ### 1. 개발환경
 > 공통         
 >> 운영체제 : Windows / Linux(ubuntu)         
